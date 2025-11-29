@@ -10,4 +10,18 @@ export default defineSchema({
   numbers: defineTable({
     value: v.number(),
   }),
+  folders: defineTable({
+    name: v.string(),
+    userId: v.id("users"),
+    parentId: v.union(v.id("folders"), v.null()),
+    createdAt: v.string(),
+    updatedAt: v.union(v.string(), v.null()),
+  }),
+  items: defineTable({
+    name: v.string(),
+    userId: v.id("users"),
+    parentId: v.union(v.id("folders"), v.null()),
+    createdAt: v.string(),
+    updatedAt: v.union(v.string(), v.null()),
+  }),
 });

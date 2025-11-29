@@ -9,6 +9,9 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as functions_folder from "../functions/folder.js";
+import type * as functions_item from "../functions/item.js";
+import type * as functions_user from "../functions/user.js";
 import type * as http from "../http.js";
 import type * as myFunctions from "../myFunctions.js";
 
@@ -20,6 +23,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  "functions/folder": typeof functions_folder;
+  "functions/item": typeof functions_item;
+  "functions/user": typeof functions_user;
   http: typeof http;
   myFunctions: typeof myFunctions;
 }>;

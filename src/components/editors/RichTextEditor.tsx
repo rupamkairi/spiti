@@ -1,5 +1,6 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Button from "./Buttons";
 
 export type RichTextEditorProps = {
   value: string | null;
@@ -30,23 +31,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   if (!editor) return null;
 
-  const Button = (props: {
-    onClick: () => void;
-    active?: boolean;
-    children: string;
-  }) => (
-    <button
-      type="button"
-      className={`btn btn-xs ${props.active ? "btn-primary" : "btn-ghost"}`}
-      onClick={props.onClick}
-    >
-      {props.children}
-    </button>
-  );
-
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap gap-1 items-center border rounded-md p-1">
+      <div className="flex flex-wrap gap-1 items-center border rounded-md p-1 bg-base-100">
         <Button
           onClick={() => editor.chain().focus().toggleBold().run()}
           active={editor.isActive("bold")}
@@ -117,7 +104,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
           Redo
         </Button>
       </div>
-      <div className="prose max-w-none border rounded-md p-2">
+      <div className="border rounded-md p-2 bg-base-100">
         <EditorContent editor={editor} />
       </div>
     </div>

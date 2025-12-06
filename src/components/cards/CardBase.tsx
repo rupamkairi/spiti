@@ -5,10 +5,10 @@ export type CardBaseProps = {
 
 export default function CardBase(props: CardBaseProps) {
   return (
-    <div className="card card-border hover:shadow bg-base-100 ">
+    <div className="card bg-base-100 shadow-sm hover:shadow-md transition-shadow">
       <div className="card-body">
-        <p>{props.title}</p>
-        <p className="overflow-hidden whitespace-nowrap text-ellipsis link link-primary">
+        <h3 className="card-title text-base-content">{props.title}</h3>
+        <p className="overflow-hidden whitespace-nowrap text-ellipsis text-sm text-base-300">
           {props.id}
         </p>
       </div>

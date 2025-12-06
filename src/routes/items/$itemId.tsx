@@ -51,39 +51,51 @@ function ItemForm(props: {
   );
 
   return (
-    <div>
-      <p>Hello "/items/$itemId"! {props.item.itemId}</p>
-
-      <button
-        className="btn btn-secondary"
-        onClick={() => {
-          void editItem({
-            item: {
-              itemId: props.item.itemId,
-              name: props.item.name,
-              parentId: props.item.parentId,
-              contentId: props.item.contentId,
-              content: {
-                text,
-                content:
-                  contentJson ||
-                  JSON.stringify({
-                    type: "doc",
-                    content: [{ type: "paragraph" }],
-                  }),
-                photos: [],
-                videos: [],
-                updatedAt: new Date().toISOString(),
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">{props.item.name}</h1>
+          <p className="text-sm text-base-300">{props.item.itemId}</p>
+        </div>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            void editItem({
+              item: {
+                itemId: props.item.itemId,
+                name: props.item.name,
+                parentId: props.item.parentId,
+                contentId: props.item.contentId,
+                content: {
+                  text,
+                  content:
+                    contentJson ||
+                    JSON.stringify({
+                      type: "doc",
+                      content: [{ type: "paragraph" }],
+                    }),
+                  photos: [],
+                  videos: [],
+                  updatedAt: new Date().toISOString(),
+                },
               },
-            },
-          });
-        }}
-      >
-        Save
-      </button>
-      <p>{props.item.name}</p>
-      {/* <EditText text={text} onChange={setText} /> */}
-      <RichTextEditor value={contentJson} onChange={setContentJson} />
+            });
+          }}
+        >
+          Save
+        </button>
+      </div>
+      <div className="card bg-base-100 shadow-sm">
+        <div className="card-body space-y-4">
+          <RichTextEditor value={contentJson} onChange={setContentJson} />
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Plain text summary</span>
+            </label>
+            <EditText text={text} onChange={setText} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

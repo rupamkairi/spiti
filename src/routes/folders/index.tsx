@@ -14,23 +14,25 @@ function RouteComponent() {
   const createFolder = useMutation(api.functions.folder.createFolder);
 
   return (
-    <div>
-      <p>Hello "/folders/"!</p>
-      <div>
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Folders</h1>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            void createFolder({ name: "New Folder", parentId: null });
+          }}
+        >
+          Create Folder
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {folders?.map((folder) => (
           <div key={folder._id}>
             <FolderCard id={folder._id} title={folder.name} />
           </div>
         ))}
       </div>
-      <button
-        className="btn btn-secondary"
-        onClick={() => {
-          void createFolder({ name: "New Folder", parentId: null });
-        }}
-      >
-        Create Folder
-      </button>
     </div>
   );
 }

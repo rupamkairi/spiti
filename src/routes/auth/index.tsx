@@ -20,9 +20,12 @@ function SignInForm() {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <div className="mx-auto">
+    <div className="max-w-md mx-auto">
+      <div className="card bg-base-100 shadow-sm">
+        <div className="card-body">
+          <h2 className="card-title">{flow === "signIn" ? "Sign in" : "Sign up"}</h2>
       <form
-        className=""
+        className="space-y-3"
         onSubmit={(e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
@@ -33,28 +36,28 @@ function SignInForm() {
         }}
       >
         <input
-          className="block input input-bordered"
+          className="input input-bordered w-full"
           type="email"
           name="email"
           placeholder="Email"
         />
         <input
-          className="block input input-bordered"
+          className="input input-bordered w-full"
           type="password"
           name="password"
           placeholder="Password"
         />
-        <button className="block btn btn-primary" type="submit">
+        <button className="btn btn-primary w-full" type="submit">
           {flow === "signIn" ? "Sign in" : "Sign up"}
         </button>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 justify-center">
           <span>
             {flow === "signIn"
               ? "Don't have an account?"
               : "Already have an account?"}
           </span>
           <span
-            className="text-primary underline hover:no-underline cursor-pointer"
+            className="link link-primary cursor-pointer"
             onClick={() => setFlow(flow === "signIn" ? "signUp" : "signIn")}
           >
             {flow === "signIn" ? "Sign up instead" : "Sign in instead"}
@@ -66,6 +69,8 @@ function SignInForm() {
           </div>
         )}
       </form>
+        </div>
+      </div>
     </div>
   );
 }

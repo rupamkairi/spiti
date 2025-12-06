@@ -12,22 +12,25 @@ function RouteComponent() {
   const createItem = useMutation(api.functions.item.createItem);
 
   return (
-    <div>
-      <div className="grid grid-cols-4 gap-2">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Items</h1>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            void createItem({ name: "New Item", parentId: null });
+          }}
+        >
+          Create Item
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {items?.map((item) => (
           <div key={item._id}>
             <ItemCard id={item._id} title={item.name} />
           </div>
         ))}
       </div>
-      <button
-        className="btn btn-secondary"
-        onClick={() => {
-          void createItem({ name: "New Item", parentId: null });
-        }}
-      >
-        Create Item
-      </button>
     </div>
   );
 }

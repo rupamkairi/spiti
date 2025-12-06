@@ -8,20 +8,26 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <div>
-      <p>Hello "/"!</p>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-semibold">Home</h1>
       <User />
-      <Link to="/folders" className="btn btn-link">
-        Folders
-      </Link>
-      <Link to="/items" className="btn btn-link">
-        Items
-      </Link>
+      <div className="flex gap-2">
+        <Link to="/folders" className="btn btn-outline">
+          Folders
+        </Link>
+        <Link to="/items" className="btn btn-outline">
+          Items
+        </Link>
+      </div>
     </div>
   );
 }
 
 function User() {
   const user = useQuery(api.functions.user.currentUser);
-  return <div>{user?.email}</div>;
+  return (
+    <div className="alert alert-info">
+      <span>{user?.email}</span>
+    </div>
+  );
 }

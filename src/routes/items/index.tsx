@@ -1,3 +1,4 @@
+import CardBase, { type CardBaseProps } from "@/components/cards/CardBase";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -31,21 +32,12 @@ function RouteComponent() {
   );
 }
 
-type ItemCardProps = {
-  id: string;
-  title: string;
-};
+type ItemCardProps = CardBaseProps;
+
 function ItemCard(props: ItemCardProps) {
   return (
     <Link to={"/items/" + props.id}>
-      <div className="card card-border hover:shadow bg-base-100 ">
-        <div className="card-body">
-          <p>{props.title}</p>
-          <p className="overflow-hidden whitespace-nowrap text-ellipsis link link-primary">
-            {props.id}
-          </p>
-        </div>
-      </div>
+      <CardBase {...props} />
     </Link>
   );
 }

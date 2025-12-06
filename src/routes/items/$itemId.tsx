@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { api } from "../../../convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
+import { useState } from "react";
+import RichTextEditor from "../../components/editors/RichTextEditor";
+import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 
 export const Route = createFileRoute("/items/$itemId")({
@@ -20,6 +21,7 @@ function RouteComponent() {
     contentId: getItem?.item?.contentId as Id<"content">,
     content: {
       text: getItem?.content?.text as string,
+      content: (getItem?.content?.content as string) ?? "",
     },
   };
 
@@ -38,15 +40,20 @@ function ItemForm(props: {
     contentId: Id<"content">;
     content: {
       text: string;
+      content: string;
     };
   };
 }) {
   const editItem = useMutation(api.functions.item.editItem);
   const [text, setText] = useState(props.item.content.text);
+  const [contentJson, setContentJson] = useState<string>(
+    props.item.content.content ?? "",
+  );
 
   return (
     <div>
       <p>Hello "/items/$itemId"! {props.item.itemId}</p>
+
       <button
         className="btn btn-secondary"
         onClick={() => {
@@ -58,7 +65,12 @@ function ItemForm(props: {
               contentId: props.item.contentId,
               content: {
                 text,
-                content: "",
+                content:
+                  contentJson ||
+                  JSON.stringify({
+                    type: "doc",
+                    content: [{ type: "paragraph" }],
+                  }),
                 photos: [],
                 videos: [],
                 updatedAt: new Date().toISOString(),
@@ -70,7 +82,8 @@ function ItemForm(props: {
         Save
       </button>
       <p>{props.item.name}</p>
-      <EditText text={text} onChange={setText} />
+      {/* <EditText text={text} onChange={setText} /> */}
+      <RichTextEditor value={contentJson} onChange={setContentJson} />
     </div>
   );
 }

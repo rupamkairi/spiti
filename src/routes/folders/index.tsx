@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import CardBase, { type CardBaseProps } from "@/components/cards/CardBase";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
@@ -17,7 +18,9 @@ function RouteComponent() {
       <p>Hello "/folders/"!</p>
       <div>
         {folders?.map((folder) => (
-          <div key={folder._id}>{folder.name}</div>
+          <div key={folder._id}>
+            <FolderCard id={folder._id} title={folder.name} />
+          </div>
         ))}
       </div>
       <button
@@ -29,5 +32,15 @@ function RouteComponent() {
         Create Folder
       </button>
     </div>
+  );
+}
+
+type FolderCardProps = CardBaseProps;
+
+function FolderCard(props: FolderCardProps) {
+  return (
+    <Link to={"/folders/" + props.id}>
+      <CardBase {...props} />
+    </Link>
   );
 }

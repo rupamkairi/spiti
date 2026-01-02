@@ -2,6 +2,7 @@ import { useMutation } from "convex/react";
 import { useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import Button from "../editors/Buttons";
 
 interface CreateNodeModalProps {
   isOpen: boolean;
@@ -92,15 +93,10 @@ export default function CreateNodeModal({
           </div>
 
           <div className="modal-action">
-            <button
-              type="button"
-              className="btn"
-              onClick={onClose}
-              disabled={isLoading}
-            >
+            <Button className="btn" onClick={onClose} disabled={isLoading}>
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
               className="btn btn-primary"
               disabled={isLoading || !name.trim()}
@@ -110,14 +106,12 @@ export default function CreateNodeModal({
               ) : (
                 "Create"
               )}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
       <form method="dialog" className="modal-backdrop">
-        <button type="button" onClick={onClose}>
-          close
-        </button>
+        <Button onClick={onClose}>close</Button>
       </form>
     </dialog>
   );

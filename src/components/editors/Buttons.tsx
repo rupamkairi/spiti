@@ -1,15 +1,24 @@
-export default function Button(props: {
-  onClick: () => void;
+import { ButtonHTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
-  children: string;
-}) {
+}
+
+export default function Button({
+  className,
+  active,
+  children,
+  type = "button",
+  ...props
+}: ButtonProps) {
   return (
     <button
-      type="button"
-      className={`btn btn-xs ${props.active ? "btn-primary" : "btn-ghost"}`}
-      onClick={props.onClick}
+      type={type}
+      className={twMerge("btn", active ? "btn-primary" : "", className)}
+      {...props}
     >
-      {props.children}
+      {children}
     </button>
   );
 }

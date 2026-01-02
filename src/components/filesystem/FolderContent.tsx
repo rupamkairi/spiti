@@ -5,6 +5,7 @@ import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
 import CardBase from "../cards/CardBase";
 import CreateNodeModal from "./CreateNodeModal";
+import Button from "../editors/Buttons";
 
 interface FolderContentProps {
   parentId: Id<"folders"> | null;
@@ -32,23 +33,23 @@ export default function FolderContent({ parentId, title }: FolderContentProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">{title ?? "Files"}</h1>
-        <button
+        <Button
           className="btn btn-primary"
           onClick={() => setIsCreateModalOpen(true)}
         >
           Create New
-        </button>
+        </Button>
       </div>
 
       {isEmpty ? (
         <div className="text-center py-12 bg-base-200 rounded-lg border-2 border-dashed border-base-300">
           <p className="text-base-content/60">This folder is empty</p>
-          <button
+          <Button
             className="btn btn-link btn-sm mt-2"
             onClick={() => setIsCreateModalOpen(true)}
           >
             Create something
-          </button>
+          </Button>
         </div>
       ) : (
         <div className="space-y-8">

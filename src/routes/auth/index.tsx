@@ -1,3 +1,4 @@
+import Button from "@/components/editors/Buttons";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
@@ -71,7 +72,7 @@ function SignInForm() {
                 required
               />
             </div>
-            <button
+            <Button
               className="btn btn-primary w-full mt-4"
               type="submit"
               disabled={loading}
@@ -81,7 +82,7 @@ function SignInForm() {
               ) : (
                 "Sign in"
               )}
-            </button>
+            </Button>
 
             {error && (
               <div className="alert alert-error text-sm mt-4">

@@ -4,6 +4,7 @@ import { useState } from "react";
 import RichTextEditor from "../../components/editors/RichTextEditor";
 import { api } from "../../../convex/_generated/api";
 import { Id } from "../../../convex/_generated/dataModel";
+import Button from "@/components/editors/Buttons";
 
 export const Route = createFileRoute("/items/$itemId")({
   component: RouteComponent,
@@ -57,7 +58,7 @@ function ItemForm(props: {
           <h1 className="text-2xl font-semibold">{props.item.name}</h1>
           <p className="text-sm text-base-300">{props.item.itemId}</p>
         </div>
-        <button
+        <Button
           className="btn btn-primary"
           onClick={() => {
             void editItem({
@@ -83,7 +84,7 @@ function ItemForm(props: {
           }}
         >
           Save
-        </button>
+        </Button>
       </div>
       <div className="card bg-base-100 shadow-sm">
         <div className="card-body space-y-4">

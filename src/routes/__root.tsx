@@ -1,8 +1,15 @@
 import * as React from "react";
-import { Outlet, createRootRoute, useLocation, useNavigate } from "@tanstack/react-router";
-import { useConvexAuth } from "convex/react";
+import {
+  Outlet,
+  createRootRoute,
+  useLocation,
+  useNavigate,
+} from "@tanstack/react-router";
+import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useEffect } from "react";
+import { api } from "../../convex/_generated/api";
+import Button from "@/components/editors/Buttons";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -38,10 +45,12 @@ function RootComponent() {
   return (
     <React.Fragment>
       {!isAuthPage && (
-        <div className="navbar bg-base-100 border-b">
-          <div className="container mx-auto flex justify-between">
+        <div className="navbar py-0 bg-base-100 border-b">
+          <div className="container mx-auto flex p-4 justify-between">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-xl">Spiti</span>
+              <span className="font-semibold text-xl">
+                <Welcome />
+              </span>
             </div>
             <div className="flex items-center">
               <SignOutButton />
@@ -56,15 +65,22 @@ function RootComponent() {
   );
 }
 
+function Welcome() {
+  const user = useQuery(api.functions.user.currentUser);
+
+  if (!user) return "Spiti";
+  return <h1>Welcome {user?.name} to Spiti!</h1>;
+}
+
 function SignOutButton() {
   const { isAuthenticated } = useConvexAuth();
   const { signOut } = useAuthActions();
   return (
     <>
       {isAuthenticated && (
-        <button className="btn btn-primary" onClick={() => void signOut()}>
+        <Button className="btn btn-primary" onClick={() => void signOut()}>
           Sign out
-        </button>
+        </Button>
       )}
     </>
   );

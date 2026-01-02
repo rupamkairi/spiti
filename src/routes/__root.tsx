@@ -1,25 +1,54 @@
 import * as React from "react";
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { Outlet, createRootRoute, useLocation, useNavigate } from "@tanstack/react-router";
 import { useConvexAuth } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useEffect } from "react";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { isAuthenticated, isLoading } = useConvexAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoading) return;
+    const isAuthPage = location.pathname.startsWith("/auth");
+
+    if (!isAuthenticated && !isAuthPage) {
+      void navigate({ to: "/auth" });
+    }
+    if (isAuthenticated && isAuthPage) {
+      void navigate({ to: "/" });
+    }
+  }, [isLoading, isAuthenticated, location.pathname, navigate]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
+
+  const isAuthPage = location.pathname.startsWith("/auth");
+
   return (
     <React.Fragment>
-      <div className="navbar bg-base-100 border-b">
-        <div className="container mx-auto flex justify-between">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold">Spiti</span>
-          </div>
-          <div className="flex items-center">
-            <SignOutButton />
+      {!isAuthPage && (
+        <div className="navbar bg-base-100 border-b">
+          <div className="container mx-auto flex justify-between">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-xl">Spiti</span>
+            </div>
+            <div className="flex items-center">
+              <SignOutButton />
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="container mx-auto p-4">
         <Outlet />
       </div>

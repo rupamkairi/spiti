@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 * {
   font-family: "Noto Sans", sans-serif;

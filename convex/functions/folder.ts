@@ -35,4 +35,18 @@ export const createFolder = mutation({
     return folder;
   },
 });
+
+export const getFolder = query({
+  args: {
+    folderId: v.id("folders"),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthenticated");
+    }
+    const folder = await ctx.db.get(args.folderId);
+    return folder;
+  },
+});
 //  (name: string, parentId: string | null)

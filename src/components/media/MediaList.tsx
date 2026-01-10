@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import {
   ImagePreview,
   VideoPreview,
@@ -62,7 +62,7 @@ export default function MediaList() {
             <button
               onClick={() => {
                 if (confirm("Are you sure you want to delete this media?")) {
-                  deleteMedia({
+                  void deleteMedia({
                     mediaId: item._id,
                     storageId: item.storageId,
                   });

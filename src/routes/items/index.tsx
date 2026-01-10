@@ -1,8 +1,8 @@
 import CardBase, { type CardBaseProps } from "@/components/cards/CardBase";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
-import { api } from "../../../convex/_generated/api";
-import Button from "../../components/editors/Buttons";
+import { api } from "@/convex/_generated/api";
+import Button from "@/components/editors/Buttons";
 
 export const Route = createFileRoute("/items/")({
   component: RouteComponent,

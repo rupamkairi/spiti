@@ -30,6 +30,7 @@ export default defineSchema({
     content: v.string(),
     photos: v.array(v.string()),
     videos: v.array(v.string()),
+    mediaIds: v.array(v.id("media")),
     createdAt: v.string(),
     updatedAt: v.union(v.string(), v.null()),
   }),
@@ -41,4 +42,14 @@ export default defineSchema({
     userId: v.id("users"),
     createdAt: v.string(),
   }).index("by_userId", ["userId"]),
+  item_media: defineTable({
+    itemId: v.id("items"),
+    mediaId: v.id("media"),
+    position: v.optional(v.number()),
+    caption: v.optional(v.string()),
+    createdAt: v.string(),
+  })
+    .index("by_itemId", ["itemId"])
+    .index("by_mediaId", ["mediaId"])
+    .index("by_itemId_and_mediaId", ["itemId", "mediaId"]),
 });

@@ -1,8 +1,8 @@
 import { useQuery } from "convex/react";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import CardBase from "../cards/CardBase";
 import CreateNodeModal from "./CreateNodeModal";
 import Button from "../editors/Buttons";

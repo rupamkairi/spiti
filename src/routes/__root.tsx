@@ -4,12 +4,11 @@ import {
   createRootRoute,
   useLocation,
   useNavigate,
-  Link,
 } from "@tanstack/react-router";
 import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useEffect } from "react";
-import { api } from "../../convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import Button from "@/components/editors/Buttons";
 
 export const Route = createRootRoute({

@@ -58,6 +58,24 @@ export const listMedia = query({
   },
 });
 
+export const getMediaById = query({
+  args: { mediaId: v.id("media") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthenticated");
+    }
+    const media = await ctx.db.get(args.mediaId);
+    if (!media || media.userId !== userId) {
+      throw new Error("Media not found or unauthorized");
+    }
+    return {
+      ...media,
+      url: media.storageId ? await ctx.storage.getUrl(media.storageId) : media.url,
+    };
+  },
+});
+
 export const deleteMedia = mutation({
   args: {
     mediaId: v.id("media"),

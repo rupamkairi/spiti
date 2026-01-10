@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
-import RichTextEditor from "../../components/editors/RichTextEditor";
-import { api } from "../../../convex/_generated/api";
-import { Id } from "../../../convex/_generated/dataModel";
+import RichTextMediaEditor from "@/components/editors/RichTextMediaEditor";
+import { ItemMediaPreview } from "@/components/media/ItemMediaPreview";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import Button from "@/components/editors/Buttons";
 
 export const Route = createFileRoute("/items/$itemId")({
@@ -14,6 +15,7 @@ function RouteComponent() {
   const itemId = Route.useParams().itemId as Id<"items">;
 
   const getItem = useQuery(api.functions.item.getItem, { itemId });
+  const itemMedia = useQuery(api.functions.item.getItemMedia, { itemId });
 
   const item = {
     itemId: getItem?.item?._id as Id<"items">,
@@ -30,7 +32,7 @@ function RouteComponent() {
     return <div>Loading...</div>;
   }
 
-  return <ItemForm key={itemId} item={item} />;
+  return <ItemForm key={itemId} item={item} itemMedia={itemMedia} />;
 }
 
 function ItemForm(props: {
@@ -44,6 +46,7 @@ function ItemForm(props: {
       content: string;
     };
   };
+  itemMedia: any[] | undefined;
 }) {
   const editItem = useMutation(api.functions.item.editItem);
   const [text, setText] = useState(props.item.content.text);
@@ -77,6 +80,7 @@ function ItemForm(props: {
                     }),
                   photos: [],
                   videos: [],
+                  mediaIds: [],
                   updatedAt: new Date().toISOString(),
                 },
               },
@@ -86,9 +90,33 @@ function ItemForm(props: {
           Save
         </Button>
       </div>
+      {/* Media Gallery */}
+      {props.itemMedia && props.itemMedia.length > 0 && (
+        <div className="card bg-base-100 shadow-sm">
+          <div className="card-body">
+            <h2 className="card-title">Media</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {props.itemMedia.map((media: any) => (
+                <ItemMediaPreview
+                  key={media._id}
+                  mediaId={media._id}
+                  caption={media.caption}
+                  size="medium"
+                  showCaption={true}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="card bg-base-100 shadow-sm">
         <div className="card-body space-y-4">
-          <RichTextEditor value={contentJson} onChange={setContentJson} />
+          <RichTextMediaEditor
+            value={contentJson}
+            onChange={setContentJson}
+            itemId={props.item.itemId}
+          />
           <div className="form-control">
             <label className="label">
               <span className="label-text">Plain text summary</span>

@@ -30,7 +30,7 @@ export default defineSchema({
     content: v.string(),
     photos: v.array(v.string()),
     videos: v.array(v.string()),
-    mediaIds: v.array(v.id("media")),
+    mediaIds: v.optional(v.array(v.id("media"))),
     createdAt: v.string(),
     updatedAt: v.union(v.string(), v.null()),
   }),

@@ -12,8 +12,9 @@ export default defineConfig({
     react(),
   ],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: [
+      { find: "@/convex", replacement: path.resolve(__dirname, "./convex") },
+      { find: "@", replacement: path.resolve(__dirname, "./src") },
+    ],
   },
 });

@@ -4,6 +4,7 @@ import {
   createRootRoute,
   useLocation,
   useNavigate,
+  Link,
 } from "@tanstack/react-router";
 import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";

@@ -33,4 +33,12 @@ export default defineSchema({
     createdAt: v.string(),
     updatedAt: v.union(v.string(), v.null()),
   }),
+  media: defineTable({
+    storageId: v.optional(v.id("_storage")),
+    url: v.optional(v.string()),
+    type: v.string(),
+    name: v.string(),
+    userId: v.id("users"),
+    createdAt: v.string(),
+  }).index("by_userId", ["userId"]),
 });

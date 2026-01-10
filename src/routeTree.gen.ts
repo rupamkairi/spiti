@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MediaGalleryIndexRouteImport } from './routes/media-gallery/index'
 import { Route as ItemsIndexRouteImport } from './routes/items/index'
 import { Route as FoldersIndexRouteImport } from './routes/folders/index'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
@@ -19,6 +20,11 @@ import { Route as FoldersFolderIdRouteImport } from './routes/folders/$folderId'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaGalleryIndexRoute = MediaGalleryIndexRouteImport.update({
+  id: '/media-gallery/',
+  path: '/media-gallery/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ItemsIndexRoute = ItemsIndexRouteImport.update({
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthIndexRoute
   '/folders': typeof FoldersIndexRoute
   '/items': typeof ItemsIndexRoute
+  '/media-gallery': typeof MediaGalleryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthIndexRoute
   '/folders': typeof FoldersIndexRoute
   '/items': typeof ItemsIndexRoute
+  '/media-gallery': typeof MediaGalleryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/auth/': typeof AuthIndexRoute
   '/folders/': typeof FoldersIndexRoute
   '/items/': typeof ItemsIndexRoute
+  '/media-gallery/': typeof MediaGalleryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/folders'
     | '/items'
+    | '/media-gallery'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/folders'
     | '/items'
+    | '/media-gallery'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/auth/'
     | '/folders/'
     | '/items/'
+    | '/media-gallery/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
   FoldersIndexRoute: typeof FoldersIndexRoute
   ItemsIndexRoute: typeof ItemsIndexRoute
+  MediaGalleryIndexRoute: typeof MediaGalleryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media-gallery/': {
+      id: '/media-gallery/'
+      path: '/media-gallery'
+      fullPath: '/media-gallery'
+      preLoaderRoute: typeof MediaGalleryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/items/': {
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
   FoldersIndexRoute: FoldersIndexRoute,
   ItemsIndexRoute: ItemsIndexRoute,
+  MediaGalleryIndexRoute: MediaGalleryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
